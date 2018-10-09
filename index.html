@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head>
+        <meta charset="utf-8">
+        <title>nD TicTacToe</title>
+        <style media="screen">
+            table, th, td {
+                border: 1px solid black;
+                border-collapse: collapse;
+                padding: 2px;
+            }
+        </style>
+    </head>
+    <body>
+        <script type="text/javascript">
+            function tictactoe(n,p) {
+                // n = dimensions
+                // p = function (x) {...} >> p elements are in the x dimension
+                if (n==0) {
+                    return 0;
+                }else{
+                    var tmp = [];
+                    for (var i = 0; i < p(n); i++) {
+                        tmp.push(tictactoe(n-1,p));
+                    }
+                    return tmp;
+                }
+            }
+            function getDimensions(arr) {
+                // returns the amount of dimensions that a TicTacToe array has
+                if (typeof arr == "object") {
+                    return getDimensions(arr[0])+1;
+                }else {
+                    return 0;
+                }
+            }
+            function checkLine(arr) {
+                // a TicTacToe line is consistent if:
+                //      1. (n-1) dimensions stay the same + 1 dimension in increasing or decreasing order has the same values:
+                //          {[0,0],[0,1],[0,2]}
+                //          {[0,3,0],[1,3,0],[2,3,0]}
+                //      2. the line starts in a corner and n dimensions increase/decrease together
+                function hvCheck() {
+                    // perform a horizontal/vertical check for lines
+                }
+                function dCheck() {
+                    // perform a diagonal check for lines
+                }
+            }
+            function grid(arr, hv, d) {
+                // creates a 2d representation of a nd TicTacToe field
+                // arr = input array / a tictactoe field
+                // hv = false=> horizontal alignment
+                //      true => vertical alignment
+                // d = "depth"/dimension that is currently processed > used to color the tables
+                if (hv==undefined) {
+                    hv = false;
+                }
+                if (d==undefined) {
+                    d = 0;
+                }
+                var tbl = document.createElement('table');
+                var tr = document.createElement('tr');
+                for (var i = 0; i < arr.length; i++) {
+                    var td = document.createElement('td');
+                    if (typeof arr[i]!="number") {
+                        if (hv) {
+                            var tr = document.createElement('tr');
+                            tbl.appendChild(tr);
+                        }
+                        td.appendChild(grid(arr[i],!hv, d+1));
+                    }else {
+                        td.innerHTML = arr[i];
+                    }
+                    tr.appendChild(td);
+                }
+                tbl.appendChild(tr);
+                tbl.style.backgroundColor = "hsl("+d*(360/5)+",100%,50%)";
+                return tbl;
+            }
+
+            document.body.appendChild(
+                grid(
+                    tictactoe(3,function (x) {return 3})
+                )
+            )
+        </script>
+    </body>
+</html>
