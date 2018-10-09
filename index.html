@@ -54,7 +54,7 @@
                 //      true => vertical alignment
                 // d = "depth"/dimension that is currently processed > used to color the tables
                 if (hv==undefined) {
-                    hv = false;
+                    hv = true;
                 }
                 if (d==undefined) {
                     d = 0;
@@ -81,7 +81,7 @@
 
             document.body.appendChild(
                 grid(
-                    tictactoe(3,function (x) {return 3})
+                    tictactoe(5,function (x) {return 3})
                 )
             )
         </script>
